@@ -16,10 +16,7 @@ void Function::printFunction(int degree, int *coefficients)
 
     for (int i = degree; i >= 0; i--) // suppose degree is 3
     {
-        if (coefficients[i] == 0)
-        {
-            return;
-        }
+
         if (coefficients[i] >= 0)
         {
             cout << "+";

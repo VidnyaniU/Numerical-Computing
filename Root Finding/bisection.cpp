@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "function.hpp"
 #include <math.h>
 using namespace std;
@@ -9,20 +10,20 @@ double tolerence = 0.01;
 double c;
 void bisection(double a, double b)
 {
-    if (f1.func(f1.degree, f1.coefficients, a) * f1.func(f1.degree, f1.coefficients, b) >= 0) // if a and b have same signs
+    if (f1.func(f1.degree, f1.coefficients, a) * f1.func(f1.degree, f1.coefficients, b) > 0) // if a and b have same signs
     {
-        cout << "Incorrect a and b" << endl;
+        cout << "Incorrect a and b." << endl;
         return;
     }
-    while (abs(c)>= tolerence)
+    while (b - a >= tolerence)
     {
         c = (a + b) / 2;
         if (f1.func(f1.degree, f1.coefficients, c) == 0)
         {
             cout << "Root : " << c << endl;
-            return;
+            break;
         }
-        else if (f1.func(f1.degree, f1.coefficients, a) * f1.func(f1.degree, f1.coefficients, c) < 0) // if f(a) * f(c) < 0, the root lies in [a, c], so update b = c
+        else if (f1.func(f1.degree, f1.coefficients, c) * f1.func(f1.degree, f1.coefficients, a) < 0) // if f(a) * f(c) < 0, the root lies in [a, c], so update b = c
         {
             cout << "Root : " << c << endl;
             b = c;
