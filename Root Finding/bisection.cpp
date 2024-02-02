@@ -13,7 +13,7 @@ void bisection(double a, double b)
         cout << "Incorrect a and b" << endl;
         return;
     }
-    while (b - a >= tolerence)
+    while (abs|c|>= tolerence)
     {
         c = (a + b) / 2;
         if (f1.func(f1.degree, f1.coefficients, c) == 0)
