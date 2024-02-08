@@ -10,6 +10,6 @@ public:
     void sub(Complex, Complex);
     void mul(Complex, Complex);
     void div(Complex, Complex);
-    void norm(Complex);
+    double norm(Complex);
     void conjugate();
 };
