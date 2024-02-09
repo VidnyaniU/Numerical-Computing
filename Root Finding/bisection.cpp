@@ -1,21 +1,21 @@
 #include <iostream>
 #include <math.h>
-// #include "function.hpp"
 using namespace std;
 
 // Function f1;
 double func(double x)
 {
     return 2 * x * x - 1;
+    // return 4 * x * x * x - 3 * x;
 }
-double tolerence = 0.01;
+double tolerence;
 double c;
-void bisection(double a, double b)
+double bisection(double a, double b, double tolerence)
 {
     if (func(a) * func(b) >= 0) // if a and b have same signs
     {
         cout << "Incorrect a and b." << endl;
-        return;
+        return 0;
     }
     c = a;
     while (b - a >= tolerence)
@@ -38,38 +38,21 @@ void bisection(double a, double b)
         }
     }
 
-    cout << "The root is: " << c << endl;
+    return c;
 }
 
 int main()
 {
     double a, b;
-    a = 0;
-    b = 1;
-
-    // Function f1;
-    // int degree;
-    // cout << "Enter degree: ";
-    // cin >> degree;
-    // cout << endl;
-
-    // int *coefficients = new int[degree + 1];
-    // int len = *(&coefficients + 1) - coefficients;
-    // cout << "Length = " << len;
-    // for (int i = 0; i < degree + 1; i++)
-    // {
-    //     cout << "Enter coefficient of x ^ " << i << ":";
-    //     cin >> coefficients[i];
-    //     cout << endl;
-    // }
-    // cout << "The function is : ";
-    // f1.printFunction(degree, coefficients);
-    // cout << endl;
+    cout << "Enter the values of a and b ";
+    cin >> a >> b;
+    cout << endl
+         << "Enter tolerence: ";
+    cin >> tolerence;
 
     cout << "a = " << a << " :: f(a) = " << func(a) << endl;
     cout << "b = " << b << " :: f(b) = " << func(b) << endl;
 
-    bisection(a, b);
-    // cout << "Accurate root is " << c << endl;
+    cout << bisection(a, b, tolerence);
     return 0;
 }
