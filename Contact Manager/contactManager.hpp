@@ -37,7 +37,7 @@ public:
     void searchNumber(long long phoneNumber);
     void searchEmail(string email);
 
-    void backUp();
+    void backUp(long long phoneNumber);
     void restore();
 
     // array of struct data
