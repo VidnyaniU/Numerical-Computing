@@ -5,18 +5,40 @@ struct data
     string firstName;
     string lastName;
     string email;
-    ulong phoneNumber;
+    long long phoneNumber;
 };
 class ContactM
 {
 public:
     ContactM();
-    ContactM(string, string, ulong, string);
 
     // member functions - add , edit , list , delete
-    void AddContact(string, string, ulong, string);
-    void ListAllContacts();
-    void DeleteContact(ulong phoneNumber);
+
+    void addContact(string, string, long long, string);
+    void addContact(); // accept details from the user
+
+    void listAllContacts();
+
+    // function to edit details
+
+    void edit(int index);
+    void editPhoneNumber(long long phoneNumber);
+    void editName(string firstName, string lastName);
+    void editEmail(string email);
+
+    // delete user from system
+
+    void removeUser(int index);
+    void removeUserName(string);
+    void removeUserNumber(long long);
+    void removeUserEmail(string);
+
+    void searchName(string name);
+    void searchNumber(long long phoneNumber);
+    void searchEmail(string email);
+
+    void backUp();
+    void restore();
 
     // array of struct data
     vector<struct data> info;
