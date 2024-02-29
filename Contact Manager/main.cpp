@@ -10,15 +10,16 @@ int main()
     cm.addContact("Bun", "Bun", 6466466541, "bun@gmail.com");
     cm.addContact("Gru", "Min", 6879466540, "gru@gmail.com");
 
-    // cm.listAllContacts();
+    cm.listAllContacts();
 
     // cm.DeleteContact(4641646654);
     // cm.addContact();
     // cm.removeUserEmail("vid@gmail.com");
     // cm.removeUserName("Vid");
     // cm.searchEmail("gru@gmail.com");
-    cm.listAllContacts();
-    // cm.backUp(4641646654);
+    // cm.listAllContacts();
+    cm.backUp();
+    cm.restore();
     cout << endl;
     return 0;
 }

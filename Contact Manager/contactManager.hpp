@@ -38,7 +38,8 @@ public:
     void searchNumber(long long phoneNumber);
     void searchEmail(string email);
 
-    void backUp(long long phoneNumber);
+    void backUp();
+    void restore();
 
     // array of struct data
     vector<struct data> info;

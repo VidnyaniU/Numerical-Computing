@@ -193,29 +193,38 @@ void ContactM::searchEmail(string email)
     cout << "\nFirst Name :: " << info[index].firstName << "\nLast Name :: " << info[index].lastName << "\nPhone Number :: " << info[index].phoneNumber << "\nEmail :: " << info[index].email << endl;
 }
 
-void ContactM::backUp(long long phoneNumber)
+void ContactM::backUp()
 {
-    // find the index of the phoneNumber
-    int index = 0;
-    for (int i = 0; i < info.size(); i++)
-    {
-        if (info[i].phoneNumber == phoneNumber)
-        {
-            index = i;
-            break;
-        }
-    }
+
     // backup file
     ofstream backupFile("backup.txt", ios::out);
 
     // write the contact details to the backup file
-    backupFile << "First Name: " << info[index].firstName << endl;
-    backupFile << "Last Name: " << info[index].lastName << endl;
-    backupFile << "Phone Number: " << info[index].phoneNumber << endl;
-    backupFile << "Email: " << info[index].email << endl;
+
+    for (int i = 0; i < info.size(); i++)
+    {
+        backupFile << "First Name: " << info[i].firstName << endl;
+        backupFile << "Last Name: " << info[i].lastName << endl;
+        backupFile << "Phone Number: " << info[i].phoneNumber << endl;
+        backupFile << "Email: " << info[i].email << endl;
+        backupFile << endl;
+    }
 
     // close the backup file
     backupFile.close();
 
-    cout << "Backup created successfully!" << endl;
+    cout << "\nBackup created successfully!\n\n";
+}
+
+void ContactM::restore()
+{
+    string details;
+
+    ifstream restoreFile("backup.txt");
+    while (getline(restoreFile, details))
+    {
+        cout << details;
+        cout << endl;
+    }
+    restoreFile.close();
 }
