@@ -19,26 +19,26 @@ public:
 
     void listAllContacts();
 
-    // function to edit details
+    // edit details
 
     void edit(int index);
     void editPhoneNumber(long long phoneNumber);
     void editName(string firstName, string lastName);
     void editEmail(string email);
 
-    // delete user from system
+    // delete user
 
     void removeUser(int index);
     void removeUserName(string);
     void removeUserNumber(long long);
     void removeUserEmail(string);
 
+    // search user
     void searchName(string name);
     void searchNumber(long long phoneNumber);
     void searchEmail(string email);
 
     void backUp(long long phoneNumber);
-    void restore();
 
     // array of struct data
     vector<struct data> info;

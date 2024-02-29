@@ -16,7 +16,6 @@ void ContactM::addContact(string firstName, string lastName, long long phoneNumb
 
     info.push_back(temp);
 }
-
 void ContactM ::addContact()
 {
     struct data temp;
@@ -117,10 +116,9 @@ void ContactM::removeUserName(string firstName)
         }
     }
 
-    // erase contact from that index
-    info.erase(info.begin() + index);
+    // remove username
+    info[index].firstName = "";
 }
-
 void ContactM::removeUserNumber(long long phoneNumber)
 {
     // find the index of the phoneNumber
@@ -133,9 +131,8 @@ void ContactM::removeUserNumber(long long phoneNumber)
             break;
         }
     }
-
-    // erase contact from that index
-    info.erase(info.begin() + index);
+    // remove phoneNumber
+    info[index].phoneNumber = 0;
 }
 void ContactM::removeUserEmail(string email)
 {
@@ -149,8 +146,10 @@ void ContactM::removeUserEmail(string email)
             break;
         }
     }
-    info.erase(info.begin() + index);
+    // remove email
+    info[index].email = "";
 }
+
 void ContactM::searchName(string firstName)
 {
     // find the index of the name
@@ -206,7 +205,7 @@ void ContactM::backUp(long long phoneNumber)
             break;
         }
     }
-    // create a backup file
+    // backup file
     ofstream backupFile("backup.txt", ios::out);
 
     // write the contact details to the backup file
@@ -218,5 +217,5 @@ void ContactM::backUp(long long phoneNumber)
     // close the backup file
     backupFile.close();
 
-    cout << "Backup created successfully." << endl;
+    cout << "Backup created successfully!" << endl;
 }
