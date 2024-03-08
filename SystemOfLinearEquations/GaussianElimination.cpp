@@ -1,98 +1,9 @@
 #include <bits/stdc++.h>
+#include "GaussianElimination.hpp"
 using namespace std;
 
-// void printMatrix(vector<double, double> mat, int rows, int cols)
-// {
-//     for (int i = 0; i < rows; i++)
-//     {
-//         for (int j = 0; j < cols - 1; j++)
-//         {
-//             cout << mat[i][j] << " ";
-//         }
-//         cout << endl;
-//     }
-// }
-// void gaussianElimination(vector<double, double> mat, int nRows, int nCols)
-// {
-//     // reduce to lower triangular
-//     int r = 0, c = 0;
-//     while (r < nRows && c < nCols)
-//     {
-//         // code for pivot goes here
-//         int pivot = mat[r][c];
-//         for (int i = 0; i < nRows; i++)
-//         {
-//             if (mat[r][c] != 0)
-//             {
-//                 mat[r][i] = mat[r][i] / pivot;
-//             }
-//         }
-
-//         // row transformation
-//         for (int i = r + 1; i < nRows; i++)
-//         {
-//             int temp = mat[i][c];
-
-//             for (int j = 0; j < nCols; j++)
-//             {
-//                 mat[i][j] = mat[i][j] + ((-temp) * mat[r][j]);
-//             }
-//         }
-//         r++;
-//         c++;
-//     }
-
-//     for (int i = 0; i < nRows; i++)
-//     {
-//         for (int j = 0; j < nCols; j++)
-//         {
-//             cout << mat[i][j] << " ";
-//         }
-//         cout << endl;
-//     }
-
-//     // back substitution
-// }
-int main()
+void GaussianElimination::printMatrix(vector<vector<double>> &mat, int rows, int cols)
 {
-    string fileName_L = "matrixL.txt";
-    string fileName_R = "matrixR.txt";
-
-    ifstream fin;
-    fin.open(fileName_L);
-
-    int rows, cols;
-    fin >> rows >> cols;
-
-    vector<double, double> mat;
-
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols - 1; j++)
-        {
-            fin >> mat[i][j];
-        }
-    }
-    // printMatrix(mat, rows, cols);
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols - 1; j++)
-        {
-            cout << mat[i][j] << " ";
-        }
-        cout << endl;
-    }
-
-    fin.close();
-
-    // augmented col
-    fin.open(fileName_R);
-    for (int i = 0; i < rows; i++)
-    {
-        fin >> mat[i][cols - 1];
-    }
-
-    cout << "After Augmentation:: \n";
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -101,5 +12,78 @@ int main()
         }
         cout << endl;
     }
-    return 0;
 }
+
+vector<vector<double>> GaussianElimination::rowReduction(vector<vector<double>> &mat, int nRows, int nCols)
+{
+    int i, j;
+    // reduce to lower triangular
+    int r = 0, c = 0;
+    while (r < nRows)
+    {
+        // code for pivot goes here
+        double pivot = mat[r][c];
+        for (i = 0; i < nCols; i++)
+        {
+            if (mat[r][c] != 0)
+            {
+                mat[r][i] = mat[r][i] / pivot;
+            }
+        }
+
+        // row transformation
+        for (i = r + 1; i < nRows; i++)
+        {
+            int temp = mat[i][c];
+
+            for (j = 0; j < nCols; j++)
+            {
+                mat[i][j] = mat[i][j] - (temp * mat[r][j]);
+            }
+        }
+        r++;
+        c++;
+    }
+    return mat;
+}
+
+void GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRows)
+{
+    double ans[nRows];
+    int i, j;
+    for (i = nRows - 1; i >= 0; i--)
+    {
+        ans[i] = mat[i][nRows];
+
+        for (j = i + 1; j < nRows; j++)
+        {
+            if (i != j)
+            {
+                ans[i] = ans[i] - mat[i][j] * ans[j];
+            }
+        }
+        ans[i] = ans[i] / mat[i][i];
+    }
+
+    // print the solution
+    cout << "Solution of the given system :: " << endl;
+    for (int i = 0; i < nRows; i++)
+    {
+        cout << "X" << i + 1 << " = " << ans[i] << endl;
+    }
+}
+
+void GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
+{
+    // get row reduced matrix
+    vector<vector<double>> reducedMat = rowReduction(mat, nRows, nCols);
+
+    // print reduced matrix
+
+    printMatrix(reducedMat, nRows, nCols);
+
+    // back substitution
+    backSubstition(mat, nRows);
+}
+
+
