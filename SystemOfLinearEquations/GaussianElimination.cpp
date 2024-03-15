@@ -18,14 +18,14 @@ vector<vector<double>> GaussianElimination::rowReduction(vector<vector<double>> 
 {
     int i, j;
     // reduce to lower triangular
-    int r = 0, c = 0;
+    int r = 0;
     while (r < nRows)
     {
         // code for pivot goes here
-        double pivot = mat[r][c];
+        double pivot = mat[r][r];
         for (i = 0; i < nCols; i++)
         {
-            if (mat[r][c] != 0)
+            if (mat[r][r] != 0)
             {
                 mat[r][i] = mat[r][i] / pivot;
             }
@@ -34,22 +34,21 @@ vector<vector<double>> GaussianElimination::rowReduction(vector<vector<double>> 
         // row transformation
         for (i = r + 1; i < nRows; i++)
         {
-            int temp = mat[i][c];
+            double temp = mat[i][r];
 
-            for (j = 0; j < nCols; j++)
+            for (j = r; j < nCols; j++)
             {
                 mat[i][j] = mat[i][j] - (temp * mat[r][j]);
             }
         }
         r++;
-        c++;
     }
     return mat;
 }
 
 void GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRows)
 {
-    double ans[nRows];
+    double *ans = new double[nRows];
     int i, j;
     for (i = nRows - 1; i >= 0; i--)
     {
@@ -71,6 +70,8 @@ void GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRows)
     {
         cout << "X" << i + 1 << " = " << ans[i] << endl;
     }
+
+    delete[] ans;
 }
 
 void GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
@@ -85,5 +86,3 @@ void GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int n
     // back substitution
     backSubstition(mat, nRows);
 }
-
-
