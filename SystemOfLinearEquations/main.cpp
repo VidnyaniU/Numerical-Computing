@@ -34,11 +34,9 @@ int main()
         fin >> mat[i][cols - 1];
     }
     fin.close();
-
     GaussianElimination ob1;
-    cout << "Given matrix :: " << endl;
-    ob1.printMatrix(mat, rows, cols);
-    cout << "After Row Reduction::" << endl;
+   
+
     ob1.gaussianElimination(mat, rows, cols);
 
     return 0;
