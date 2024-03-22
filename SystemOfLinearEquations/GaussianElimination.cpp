@@ -85,6 +85,8 @@ double *GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRo
 
 void GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
 {
+    fout << "No. of rows = " << nRows << "\n"
+         << "No. of cols = " << nCols << endl;
     fout << endl
          << "Given matrix :: " << endl;
     printMatrix(mat, nRows, nCols);

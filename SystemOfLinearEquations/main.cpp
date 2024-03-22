@@ -13,8 +13,6 @@ int main()
     int rows, cols;
     fin >> rows >> cols;
 
-    cout << "No. of rows = " << rows << "\n"
-         << "No. of cols = " << cols << endl;
     vector<vector<double>> mat(rows, vector<double>(cols));
 
     for (int i = 0; i < rows; i++)
@@ -35,9 +33,8 @@ int main()
     }
     fin.close();
     GaussianElimination ob1;
-   
 
     ob1.gaussianElimination(mat, rows, cols);
-
+    cout << "Output has been sent to the file successfully!" << endl;
     return 0;
 }
