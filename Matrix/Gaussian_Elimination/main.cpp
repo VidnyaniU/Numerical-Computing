@@ -49,16 +49,16 @@ int main()
     }
     fin.close();
 
+    // Gaussian Elimination Object
     GaussianElimination ob1;
 
-    double *ans = ob1.gaussianElimination(mat, rows, cols);
+    double *ans = ob1.gaussianElimination(mat, rows, cols); // solution of the system
 
     ofstream fout;
     fout.open("output.txt");
     // print the solution
 
-    fout << endl
-         << "Solution of the given system :: " << endl;
+    fout << "Solution of the given system :: " << endl;
     for (int i = 0; i < rows; i++)
     {
         fout << "X" << i + 1 << " = " << ans[i] << endl;

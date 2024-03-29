@@ -3,19 +3,6 @@
 // #include "Matrix.hpp"
 using namespace std;
 
-// ofstream fout("output.txt");
-// void GaussianElimination::printMatrix(vector<vector<double>> &mat, int rows, int cols)
-// {
-//     for (int i = 0; i < rows; i++)
-//     {
-//         for (int j = 0; j < cols; j++)
-//         {
-//             fout << mat[i][j] << " ";
-//         }
-//         fout << endl;
-//     }
-// }
-
 vector<vector<double>> GaussianElimination::rowReduction(vector<vector<double>> &mat, int nRows, int nCols)
 {
     int i, j;
@@ -86,14 +73,13 @@ double *GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRo
 
 double *GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
 {
-   
+
     // get row reduced matrix
     vector<vector<double>> reducedMat = rowReduction(mat, nRows, nCols);
 
     // back substitution
     double *ans = backSubstition(reducedMat, nRows, nCols);
 
-  
     // delete[] ans;
     return ans;
 }
