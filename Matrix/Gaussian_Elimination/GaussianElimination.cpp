@@ -1,19 +1,20 @@
 #include <bits/stdc++.h>
 #include "GaussianElimination.hpp"
+// #include "Matrix.hpp"
 using namespace std;
 
-ofstream fout("output.txt");
-void GaussianElimination::printMatrix(vector<vector<double>> &mat, int rows, int cols)
-{
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        {
-            fout << mat[i][j] << " ";
-        }
-        fout << endl;
-    }
-}
+// ofstream fout("output.txt");
+// void GaussianElimination::printMatrix(vector<vector<double>> &mat, int rows, int cols)
+// {
+//     for (int i = 0; i < rows; i++)
+//     {
+//         for (int j = 0; j < cols; j++)
+//         {
+//             fout << mat[i][j] << " ";
+//         }
+//         fout << endl;
+//     }
+// }
 
 vector<vector<double>> GaussianElimination::rowReduction(vector<vector<double>> &mat, int nRows, int nCols)
 {
@@ -83,31 +84,16 @@ double *GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRo
     return ans;
 }
 
-void GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
+double *GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
 {
-    fout << "No. of rows = " << nRows << "\n"
-         << "No. of cols = " << nCols << endl;
-    fout << endl
-         << "Given matrix :: " << endl;
-    printMatrix(mat, nRows, nCols);
+   
     // get row reduced matrix
     vector<vector<double>> reducedMat = rowReduction(mat, nRows, nCols);
-
-    // print reduced matrix
-    fout << endl
-         << "Matrix after row reduction:: " << endl;
-    printMatrix(reducedMat, nRows, nCols);
 
     // back substitution
     double *ans = backSubstition(reducedMat, nRows, nCols);
 
-    // print the solution
-    fout << endl
-         << "Solution of the given system :: " << endl;
-    for (int i = 0; i < nRows; i++)
-    {
-        fout << "X" << i + 1 << " = " << ans[i] << endl;
-    }
-    fout.close();
-    delete[] ans;
+  
+    // delete[] ans;
+    return ans;
 }

@@ -3,8 +3,8 @@ using namespace std;
 class GaussianElimination
 {
 public:
-    void printMatrix(vector<vector<double>> &mat, int nRows, int nCols);
+    void printMatrix(string fileName);
     vector<vector<double>> rowReduction(vector<vector<double>> &mat, int nRows, int nCols);
     double *backSubstition(vector<vector<double>> &mat, int nRows, int nCols);
-    void gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols);
+    double *gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols);
 };
