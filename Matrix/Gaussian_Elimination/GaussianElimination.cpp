@@ -35,9 +35,9 @@ vector<vector<double>> GaussianElimination::rowReduction(vector<vector<double>> 
     return mat;
 }
 
-double *GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRows, int nCols)
+vector<double> GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRows, int nCols)
 {
-    double *ans = new double[nCols - 2];
+    vector<double> ans(nCols - 2);
     ans[nCols - 2] = mat[nRows - 1][nCols - 1];
 
     for (int r = nRows - 2; r >= 0; --r)
@@ -71,15 +71,14 @@ double *GaussianElimination::backSubstition(vector<vector<double>> &mat, int nRo
     return ans;
 }
 
-double *GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
+vector<double> GaussianElimination::gaussianElimination(vector<vector<double>> &mat, int nRows, int nCols)
 {
 
     // get row reduced matrix
     vector<vector<double>> reducedMat = rowReduction(mat, nRows, nCols);
 
     // back substitution
-    double *ans = backSubstition(reducedMat, nRows, nCols);
+    vector<double> ans = backSubstition(reducedMat, nRows, nCols);
 
-    // delete[] ans;
     return ans;
 }

@@ -4,6 +4,6 @@ using namespace std;
 class Jacobi
 {
 public:
-    bool isDiagonallyDominant(vector<vector<double>> &mat);
-    vector<double> gaussJacobi(vector<vector<double>> &mat);
+    bool isDiagonallyDominant(vector<vector<double>> &matLHS);
+    vector<double> gaussJacobi(vector<vector<double>> &mat, int rows, int cols);
 };

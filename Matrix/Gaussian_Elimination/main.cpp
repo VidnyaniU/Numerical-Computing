@@ -1,12 +1,16 @@
 #include <bits/stdc++.h>
-// #include "Matrix/Matrix.hpp"
+#include "../Matrix.hpp"
 #include "GaussianElimination.hpp"
+#include "jacobi.hpp"
 using namespace std;
 
 int main()
 {
     // string L_3 = "matrixL.txt";
     // string R_3 = "matrixR.txt";
+
+    string L_3 = "L_3.txt"; // especially for gauss-jacobi
+    string R_3 = "R_3.txt";
 
     string L_4 = "matrixL_4.txt";
     string R_4 = "matrixR_4.txt";
@@ -20,8 +24,8 @@ int main()
     // string L_2304 = "L_matrxi_2304.txt";
     // string R_2304 = "R_rhsvect_2304.txt";
 
-    string fileName_L = L_49;
-    string fileName_R = R_49;
+    string fileName_L = L_3;
+    string fileName_R = R_3;
 
     ifstream fin;
     fin.open(fileName_L);
@@ -52,19 +56,34 @@ int main()
     // Gaussian Elimination Object
     GaussianElimination ob1;
 
-    double *ans = ob1.gaussianElimination(mat, rows, cols); // solution of the system
+    vector<double> ansGE = ob1.gaussianElimination(mat, rows, cols); // solution of the system
 
-    ofstream fout;
-    fout.open("output.txt");
+    // ofstream fout;
+    // fout.open("output.txt");
     // print the solution
 
-    fout << "Solution of the given system :: " << endl;
+    // fout << "Solution of the given system :: " << endl;
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     fout << "X" << i + 1 << " = " << ans[i] << endl;
+    // }
+    // fout.close();
+    // cout << "Output has been sent to the file successfully!" << endl;
+    cout << "Solution of the given system by gaussian elimination:: " << endl;
     for (int i = 0; i < rows; i++)
     {
-        fout << "X" << i + 1 << " = " << ans[i] << endl;
+        cout << "X" << i + 1 << " = " << ansGE[i] << endl;
     }
-    fout.close();
-    cout << "Output has been sent to the file successfully!" << endl;
-    delete[] ans;
+    cout << endl;
+
+    Jacobi ob2;
+    vector<double> ansGJ = ob2.gaussJacobi(mat, rows, cols);
+    cout << "Solution of the given system by gauss-jacobi iterative method:: " << endl;
+
+    for (int i = 0; i < rows; i++)
+    {
+        cout << "X" << i + 1 << " = " << ansGJ[i] << endl;
+    }
+    cout << endl;
     return 0;
 }
