@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
-#include "jacobi.hpp"
+#include "iterativeMethods.hpp"
 using namespace std;
 
-bool Jacobi ::isDiagonallyDominant(vector<vector<double>> &mat)
+bool iterativeMethod ::isDiagonallyDominant(vector<vector<double>> &mat)
 {
     int matLen = mat.size();
     for (int i = 0; i < matLen; i++)
@@ -25,7 +25,7 @@ bool Jacobi ::isDiagonallyDominant(vector<vector<double>> &mat)
     }
     return true;
 }
-vector<double> Jacobi::gaussJacobi(vector<vector<double>> &mat, int rows, int cols)
+vector<double> iterativeMethod::gauss_jacobi(vector<vector<double>> &mat, int rows, int cols)
 {
     int iterations = 11;
     vector<double> x(rows, 0); // initial solution
@@ -48,6 +48,30 @@ vector<double> Jacobi::gaussJacobi(vector<vector<double>> &mat, int rows, int co
                 xUpdated[r] = (mat[r][cols - 1] - sum) / mat[r][r];
             }
             x = xUpdated;
+        }
+    }
+    return xUpdated;
+}
+vector<double> iterativeMethod::gauss_seidel(vector<vector<double>> &mat, int rows, int cols)
+{
+    int iterations = 11;
+    vector<double> xUpdated(rows, 0);
+    if (isDiagonallyDominant(mat))
+    {
+        for (int iter = 0; iter < iterations; iter++)
+        {
+            for (int r = 0; r < rows; r++)
+            {
+                double sum = 0.0;
+                for (int c = 0; c < rows; c++)
+                {
+                    if (c != r)
+                    {
+                        sum += mat[r][c] * xUpdated[c];
+                    }
+                }
+                xUpdated[r] = (mat[r][cols - 1] - sum) / mat[r][r];
+            }
         }
     }
     return xUpdated;

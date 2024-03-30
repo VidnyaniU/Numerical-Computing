@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 #include "../Matrix.hpp"
 #include "GaussianElimination.hpp"
-#include "jacobi.hpp"
+#include "iterativeMethods.hpp"
+
 using namespace std;
 
 int main()
@@ -76,8 +77,8 @@ int main()
     }
     cout << endl;
 
-    Jacobi ob2;
-    vector<double> ansGJ = ob2.gaussJacobi(mat, rows, cols);
+    iterativeMethod ob2;
+    vector<double> ansGJ = ob2.gauss_jacobi(mat, rows, cols);
     cout << "Solution of the given system by gauss-jacobi iterative method:: " << endl;
 
     for (int i = 0; i < rows; i++)
