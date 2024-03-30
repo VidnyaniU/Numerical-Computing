@@ -28,7 +28,7 @@ bool Jacobi ::isDiagonallyDominant(vector<vector<double>> &mat)
 vector<double> Jacobi::gaussJacobi(vector<vector<double>> &mat, int rows, int cols)
 {
     int iterations = 11;
-
+    vector<double> x(rows, 0); // initial solution
     vector<double> xUpdated(rows, 0);
     // cout << "isDiagonallyDominant::" << isDiagonallyDominant(mat) << endl;
     if (isDiagonallyDominant(mat))
@@ -42,11 +42,12 @@ vector<double> Jacobi::gaussJacobi(vector<vector<double>> &mat, int rows, int co
                 {
                     if (c != r)
                     {
-                        sum += mat[r][c] * xUpdated[c];
+                        sum += mat[r][c] * x[c];
                     }
                 }
                 xUpdated[r] = (mat[r][cols - 1] - sum) / mat[r][r];
             }
+            x = xUpdated;
         }
     }
     return xUpdated;
