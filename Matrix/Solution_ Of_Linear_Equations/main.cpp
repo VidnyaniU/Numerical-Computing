@@ -77,8 +77,8 @@ int main()
     }
     cout << endl;
 
-    iterativeMethod ob2;
-    vector<double> ansGJ = ob2.gauss_jacobi(mat, rows, cols);
+    IterativeMethod ob2;
+    vector<double> ansGJ = ob2.gauss_jacobi();
     cout << "Solution of the given system by gauss-jacobi iterative method:: " << endl;
 
     for (int i = 0; i < rows; i++)
