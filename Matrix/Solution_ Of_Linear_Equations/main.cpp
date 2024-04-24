@@ -83,14 +83,23 @@ int main()
     }
     cout << endl;
 
-    // IterativeMethod ob2;
     vector<double> ansGJ(rows);
-    ansGJ = ob1.gauss_jacobi(mat,rows,cols);
-    cout << "Solution of the given system by gauss-jacobi iterative method:: " << endl;
+    ansGJ = ob1.gauss_jacobi(mat, rows, cols);
+    cout << "Solution of the given system by Gauss-Jacobi iterative method:: " << endl;
 
     for (int i = 0; i < rows; i++)
     {
         cout << "X" << i + 1 << " = " << ansGJ[i] << endl;
+    }
+    cout << endl;
+
+    vector<double> ansGS(rows);
+    ansGS = ob1.gauss_seidel(mat, rows, cols);
+    cout << "Solution of the given system by Gauss-Seidel iterative method:: " << endl;
+
+    for (int i = 0; i < rows; i++)
+    {
+        cout << "X" << i + 1 << " = " << ansGS[i] << endl;
     }
     cout << endl;
     return 0;

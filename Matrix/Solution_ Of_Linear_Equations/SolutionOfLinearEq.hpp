@@ -6,13 +6,15 @@ class SolutionOfLE
 public:
     vector<vector<double>> mat;
     int rows, cols;
-    bool isDiagonallyDominant();
-    bool makeDiagonallyDominant();
+    // SolutionOfLE(vector<vector<double>> mat, int rows, int cols);
+
+    bool isDiagonallyDominant(vector<vector<double>> mat, int rows, int cols);
+    bool makeDiagonallyDominant(vector<vector<double>> mat, int rows, int cols);
     int getDiagonallyDominantRowAt(int r);
     void swapRows(int row1, int row2);
-    vector<vector<double>> rowReduction();
-    vector<double> backSubstition(vector<vector<double>> reducedMat);
-    vector<double> gaussianElimination();
-    vector<double> gauss_jacobi();
-    vector<double> gauss_seidel();
+    vector<vector<double>> rowReduction(vector<vector<double>> mat, int rows, int cols);
+    vector<double> backSubstition(vector<vector<double>> reducedMat, int rows, int cols);
+    vector<double> gaussianElimination(vector<vector<double>> mat, int rows, int cols);
+    vector<double> gauss_jacobi(vector<vector<double>> mat, int rows, int cols);
+    vector<double> gauss_seidel(vector<vector<double>> mat, int rows, int cols);
 };

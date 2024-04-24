@@ -1,9 +1,8 @@
-#include "SolutionOfLinearEq.hpp";
+#include "SolutionOfLinearEq.hpp"
 using namespace std;
 
-bool SolutionOfLE::isDiagonallyDominant()
+bool SolutionOfLE::isDiagonallyDominant(vector<vector<double>> mat, int rows, int cols)
 {
-    // int matLen = matLHS.size();
     for (int r = 0; r < rows; r++)
     {
         double diagonal = fabs(mat[r][r]);
@@ -17,8 +16,8 @@ bool SolutionOfLE::isDiagonallyDominant()
             }
         }
 
-        if (diagonal < rowSum)
-        {
+        if (diagonal <= rowSum)
+        { // Changed from '<' to '<='
             return false;
         }
     }
@@ -45,18 +44,17 @@ int SolutionOfLE::getDiagonallyDominantRowAt(int r)
 }
 void SolutionOfLE::swapRows(int row1, int row2)
 {
-    for (int c = 0; c < rows; c++)
-    {
+    for (int c = 0; c < cols; c++)
+    { // Changed 'rows' to 'cols'
         double temp = mat[row1][c];
         mat[row1][c] = mat[row2][c];
-        mat[row2][c] = mat[row1][c];
+        mat[row2][c] = temp; // Swap correct values
     }
 }
-bool SolutionOfLE::makeDiagonallyDominant()
-{
-    int r, c;
 
-    for (r = 0; r < rows; r++)
+bool SolutionOfLE::makeDiagonallyDominant(vector<vector<double>> mat, int rows, int cols)
+{
+    for (int r = 0; r < rows; r++)
     {
         double diagonal = fabs(mat[r][r]);
         double rowSum = 0.0;
@@ -69,30 +67,32 @@ bool SolutionOfLE::makeDiagonallyDominant()
             }
         }
 
-        if (diagonal < rowSum)
-        {
-            // find suitable row to swap with
-            int index = getDiagonallyDominantRowAt(r); // at r th col
+        if (diagonal <= rowSum)
+        { // Changed from '<' to '<='
+            int index = getDiagonallyDominantRowAt(r);
             if (index == -1)
                 return false;
             else
                 swapRows(r, index);
         }
     }
-
     return true;
 }
 
-vector<double> SolutionOfLE::gauss_jacobi()
+vector<double> SolutionOfLE::gauss_jacobi(vector<vector<double>> mat, int rows, int cols)
 {
     vector<double> prev_ans(rows, 0); // initial solution
     vector<double> curr_ans(rows, 0);
-    // cout << "isDiagonallyDominant::" << isDiagonallyDominant(mat) << endl;
-    if (!isDiagonallyDominant())
+
+    if (!isDiagonallyDominant(mat, rows, cols))
     {
-        makeDiagonallyDominant();
+        makeDiagonallyDominant(mat, rows, cols);
     }
-    while (1)
+
+    int max_iterations = 1000; // Maximum number of iterations
+    double tolerance = 0.0001; // Tolerance for convergence
+
+    for (int iter = 0; iter < max_iterations; ++iter)
     {
         for (int r = 0; r < rows; r++)
         {
@@ -106,61 +106,68 @@ vector<double> SolutionOfLE::gauss_jacobi()
             }
             curr_ans[r] = (mat[r][cols - 1] - sum) / mat[r][r];
         }
-        // break condition
-        int flag = 1;
-        int TOL = 0.0001;
-        for (int i = 0; i < cols - 1; i++)
+
+        // Check for convergence
+        double max_diff = 0.0;
+        for (int i = 0; i < rows; i++)
         {
-            if ((fabs(prev_ans[i]) - fabs(curr_ans[i])) < TOL)
-            {
-                flag = 0;
-                break;
-            }
+            max_diff = max(max_diff, fabs(curr_ans[i] - prev_ans[i]));
         }
-        if (flag == 0)
-            break;
-        prev_ans = curr_ans; // if break doesn't happen we store current answer in the previous one and go for the inext iteration
+        if (max_diff < tolerance)
+        {
+            cout << "Number of iterations using GJ :: " << iter << endl;
+            return curr_ans; // Converged
+        }
+
+        prev_ans = curr_ans; // Update previous solution
     }
-    return curr_ans;
+    return prev_ans; // rectify later
 }
-vector<double> SolutionOfLE::gauss_seidel()
+
+vector<double> SolutionOfLE::gauss_seidel(vector<vector<double>> mat, int rows, int cols)
 {
     vector<double> prev_ans(rows, 0);
-
     vector<double> curr_ans(rows, 0);
-    // cout << "isDiagonallyDominant::" << isDiagonallyDominant(mat) << endl;
-    if (!isDiagonallyDominant())
+
+    if (!isDiagonallyDominant(mat, rows, cols))
     {
-        makeDiagonallyDominant();
+        makeDiagonallyDominant(mat, rows, cols);
     }
-    while (1)
+
+    int maxIterations = 1000; // Maximum number of iterations to avoid infinite loop
+    double TOL = 0.0001;      // Tolerance for convergence
+    int iter;
+    for (iter = 0; iter < maxIterations; iter++)
     {
         for (int r = 0; r < rows; r++)
         {
             double sum = 0.0;
-            for (int c = 0; c < rows; c++)
-            {
+            for (int c = 0; c < cols; c++)
+            { // Changed 'rows' to 'cols'
                 if (c != r)
                 {
-                    sum += mat[r][c] * curr_ans[c];
+                    sum += mat[r][c] * curr_ans[c]; // Changed to use curr_ans
                 }
             }
             curr_ans[r] = (mat[r][cols - 1] - sum) / mat[r][r];
         }
-        // break condition
-        int flag = 1;
-        int TOL = 0.0001;
+
+        bool converged = true;
         for (int i = 0; i < cols - 1; i++)
-        {
-            if ((fabs(prev_ans[i]) - fabs(curr_ans[i])) < TOL)
+        { // Changed 'rows' to 'cols'
+            if (fabs(prev_ans[i] - curr_ans[i]) >= TOL)
             {
-                flag = 0;
+                converged = false;
                 break;
             }
         }
-        if (flag == 0)
+
+        if (converged)
             break;
-        prev_ans = curr_ans; // if break doesn't happen we store current answer in the previous one and go for the inext iteration
+
+        prev_ans = curr_ans;
     }
+    cout << "Number of iterations using GS :: " << iter << endl;
+
     return curr_ans;
 }
