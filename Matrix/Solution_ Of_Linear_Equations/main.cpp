@@ -1,8 +1,4 @@
-#include <bits/stdc++.h>
-#include "../Matrix.hpp"
-#include "GaussianElimination.hpp"
-#include "iterativeMethods.hpp"
-
+#include "SolutionOfLinearEq.hpp"
 using namespace std;
 
 int main()
@@ -54,10 +50,19 @@ int main()
     }
     fin.close();
 
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     for (int j = 0; j < cols; j++)
+    //     {
+    //         cout << mat[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
     // Gaussian Elimination Object
-    GaussianElimination ob1;
+    SolutionOfLE ob1;
 
-    vector<double> ansGE = ob1.gaussianElimination(mat, rows, cols); // solution of the system
+    vector<double> ansGE(rows);
+    ansGE = ob1.gaussianElimination(mat, rows, cols); // solution of the system
 
     // ofstream fout;
     // fout.open("output.txt");
@@ -70,6 +75,7 @@ int main()
     // }
     // fout.close();
     // cout << "Output has been sent to the file successfully!" << endl;
+
     cout << "Solution of the given system by gaussian elimination:: " << endl;
     for (int i = 0; i < rows; i++)
     {
@@ -77,8 +83,9 @@ int main()
     }
     cout << endl;
 
-    IterativeMethod ob2;
-    vector<double> ansGJ = ob2.gauss_jacobi();
+    // IterativeMethod ob2;
+    vector<double> ansGJ(rows);
+    ansGJ = ob1.gauss_jacobi(mat,rows,cols);
     cout << "Solution of the given system by gauss-jacobi iterative method:: " << endl;
 
     for (int i = 0; i < rows; i++)
