@@ -48,15 +48,16 @@ vector<vector<double>> SolutionOfLE::rowReduction(vector<vector<double>> mat, in
 vector<double> SolutionOfLE::backSubstitution(vector<vector<double>> reducedMat, int rows, int cols)
 {
     vector<double> ans(rows);
-    ans[rows - 1] = reducedMat[rows - 1][cols - 1];
-    for (int r = rows - 2; r >= 0; --r)
+    ans[rows - 1] = reducedMat[rows - 1][cols - 1] / reducedMat[rows - 1][rows - 1];
+
+    for (int r = rows - 2; r >= 0; r--)
     {
         double lhs = 0;
-        for (int c = r + 1; c < cols - 1; ++c)
+        for (int c = r + 1; c < rows; c++)
         {
             lhs += reducedMat[r][c] * ans[c];
         }
-        ans[r] = reducedMat[r][cols - 1] - lhs;
+        ans[r] = (reducedMat[r][cols - 1] - lhs) / reducedMat[r][r];
     }
 
     return ans;

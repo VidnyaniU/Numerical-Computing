@@ -75,31 +75,52 @@ int main()
     // }
     // fout.close();
     // cout << "Output has been sent to the file successfully!" << endl;
-
-    cout << "Solution of the given system by gaussian elimination:: " << endl;
+    //==================================================================================
+    cout << "Solution of the given system by Gaussian Elimination:: " << endl;
     for (int i = 0; i < rows; i++)
     {
         cout << "X" << i + 1 << " = " << ansGE[i] << endl;
     }
     cout << endl;
 
-    vector<double> ansGJ(rows);
-    ansGJ = ob1.gauss_jacobi(mat, rows, cols);
-    cout << "Solution of the given system by Gauss-Jacobi iterative method:: " << endl;
+    // vector<double> ansGJ(rows);
+    // ansGJ = ob1.gauss_jacobi(mat, rows, cols);
+    // cout << "Solution of the given system by Gauss-Jacobi iterative method:: " << endl;
+
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     cout << "X" << i + 1 << " = " << ansGJ[i] << endl;
+    // }
+    // cout << endl;
+
+    // vector<double> ansGS(rows);
+    // ansGS = ob1.gauss_seidel(mat, rows, cols);
+    // cout << "Solution of the given system by Gauss-Seidel iterative method:: " << endl;
+
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     cout << "X" << i + 1 << " = " << ansGS[i] << endl;
+    // }
+    // cout << endl;
+    //============================================================================================
+    // LU not working check get_L and get_U
+    // vector<double> ansLU(rows);
+    // ansLU = ob1.lu_decomposition(mat, rows, cols);
+    // cout << "Solution of the given system by LU decomposition:: " << endl;
+
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     cout << "X" << i + 1 << " = " << ansLU[i] << endl;
+    // }
+    // cout << endl;
+
+    vector<double> ansCD(rows);
+    ansCD = ob1.cholesky_decomposition(mat, rows, cols);
+    cout << "Solution of the given system by Cholesky decomposition:: " << endl;
 
     for (int i = 0; i < rows; i++)
     {
-        cout << "X" << i + 1 << " = " << ansGJ[i] << endl;
-    }
-    cout << endl;
-
-    vector<double> ansGS(rows);
-    ansGS = ob1.gauss_seidel(mat, rows, cols);
-    cout << "Solution of the given system by Gauss-Seidel iterative method:: " << endl;
-
-    for (int i = 0; i < rows; i++)
-    {
-        cout << "X" << i + 1 << " = " << ansGS[i] << endl;
+        cout << "X" << i + 1 << " = " << ansCD[i] << endl;
     }
     cout << endl;
     return 0;
