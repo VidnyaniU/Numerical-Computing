@@ -104,15 +104,15 @@ int main()
     // cout << endl;
     //============================================================================================
     // LU not working check get_L and get_U
-    // vector<double> ansLU(rows);
-    // ansLU = ob1.lu_decomposition(mat, rows, cols);
-    // cout << "Solution of the given system by LU decomposition:: " << endl;
+    vector<double> ansLU(rows);
+    ansLU = ob1.lu_decomposition(mat, rows, cols);
+    cout << "Solution of the given system by LU decomposition:: " << endl;
 
-    // for (int i = 0; i < rows; i++)
-    // {
-    //     cout << "X" << i + 1 << " = " << ansLU[i] << endl;
-    // }
-    // cout << endl;
+    for (int i = 0; i < rows; i++)
+    {
+        cout << "X" << i + 1 << " = " << ansLU[i] << endl;
+    }
+    cout << endl;
 
     vector<double> ansCD(rows);
     ansCD = ob1.cholesky_decomposition(mat, rows, cols);

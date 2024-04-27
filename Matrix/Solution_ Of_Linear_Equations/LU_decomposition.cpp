@@ -1,32 +1,27 @@
 #include "SolutionOfLinearEq.hpp"
 using namespace std;
 
-// double get_L(int r, int c, vector<vector<double>> mat, vector<vector<double>> L, vector<vector<double>> U)
-// {
-//     double ans = 0.0;
-//     double sum = 0.0;
-//     // int cols = mat[0].size();
-//     for (int k = 0; k < c; k++)
-//     {
-//         sum += L[r][k] * U[k][c];
-//     }
-//     ans = mat[r][c] - sum;
-//     return ans;
-// }
+double get_U(int r, int c, vector<vector<double>> mat, vector<vector<double>> L, vector<vector<double>> U)
+{
+    double sum = 0.0;
+    for (int k = 0; k < r; k++)
+    {
+        sum += L[r][k] * U[k][c];
+    }
+    U[r][c] = mat[r][c] - sum;
+    return U[r][c];
+}
 
-// double get_U(int r, int c, vector<vector<double>> mat, vector<vector<double>> L, vector<vector<double>> U)
-// {
-//     double ans = 0.0;
-//     double sum = 0.0;
-//     // int rows = mat.size();
-//     for (int k = 0; k < r; k++)
-//     {
-//         sum += L[r][k] * U[k][c];
-//     }
-//     ans = (mat[r][c] - sum) / L[r][r];
-//     return ans;
-// }
-// /*
+double get_L(int r, int c, vector<vector<double>> mat, vector<vector<double>> L, vector<vector<double>> U)
+{
+    double sum = 0.0;
+    for (int k = 0; k < c; k++)
+    {
+        sum += L[r][k] * U[k][c];
+    }
+    L[r][c] = (mat[r][c] - sum) / U[c][c];
+    return L[r][c];
+}
 
 double get_Lij(int i, int j, vector<vector<double>> mat, vector<vector<double>> L)
 {
@@ -69,6 +64,7 @@ bool SolutionOfLE::isSymmetric(vector<vector<double>> mat, int rows, int cols)
     }
     return true;
 }
+
 vector<vector<double>> SolutionOfLE::getTranspose(vector<vector<double>> L, int rows, int cols)
 {
     vector<vector<double>> L_transpose(rows, vector<double>(cols - 1));
@@ -81,6 +77,7 @@ vector<vector<double>> SolutionOfLE::getTranspose(vector<vector<double>> L, int 
     }
     return L_transpose;
 }
+
 // Function to perform forward substitution
 vector<double> SolutionOfLE::forwardSubstitution(vector<vector<double>> mat, int rows, int cols)
 {
@@ -97,52 +94,62 @@ vector<double> SolutionOfLE::forwardSubstitution(vector<vector<double>> mat, int
     }
     return ans;
 }
-// vector<double> SolutionOfLE::lu_decomposition(vector<vector<double>> mat, int rows, int cols)
-// {
-//     vector<vector<double>> L(rows, vector<double>(cols - 1)); // lower triangular
-//     vector<vector<double>> U(rows, vector<double>(cols - 1)); // upper triangular
 
-//     // crout's method
-//     for (int r = 0; r < rows; r++)
-//     {
-//         U[r][r] = 1;
-//     }
+vector<double> SolutionOfLE::lu_decomposition(vector<vector<double>> mat, int rows, int cols)
+{
+    vector<vector<double>> L(rows, vector<double>(cols)); // lower triangular
+    vector<vector<double>> U(rows, vector<double>(cols)); // upper triangular
 
-//     for (int r = 0; r < rows; r++)
-//     {
-//         // for Lower Triangular Matrix column-wise
-//         for (int c = 0; c < rows; c++)
-//         {
-//             if (c >= r)
-//             {
-//                 L[c][r] = get_L(c, r, mat, L, U);
-//                 cout << "For c:: " << c << " & r:: " << r << "L :: " << L[c][r] << endl;
-//             }
-//         }
-//         // for Upper Triangular Matrix row-wise
+    for (int r = 0; r < rows; r++)
+    {
+        // for Lower Triangular Matrix
 
-//         for (int c = 0; c < rows; c++)
-//         {
-//             if (c > r)
-//             {
-//                 U[r][c] = get_U(r, c, mat, L, U);
-//                 cout << "For r:: " << r << "& c::" << c << "U ::" << U[r][c] << endl;
-//             }
-//         }
-//     }
-//     // LZ=B
-//     vector<double> z(rows);
-//     z = forwardSubstitution(L, rows, cols);
-//     // UX=Z
-//     vector<double> ans(rows);
-//     ans = backSubstitution(U, rows, cols);
+        for (int c = 0; c <= r; c++)
+        {
+            if (r == c)
+            {
+                L[r][c] = 1; // Diagonal elements are 1
+            }
+            else
+            {
 
-//     return ans;
-// }
+                L[r][c] = get_L(r, c, mat, L, U);
+            }
+        }
+        // for Upper Triangular Matrix row-wise
+
+        for (int c = 0; c < rows; c++)
+        {
+            U[r][c] = get_U(r, c, mat, L, U);
+        }
+    }
+    // attach B to L
+    for (int i = 0; i < rows; i++)
+    {
+        L[i][cols - 1] = mat[i][cols - 1];
+    }
+    // LZ=B
+    vector<double> Z(rows);
+    Z = forwardSubstitution(L, rows, cols);
+    // attach Z to U
+    for (int i = 0; i < rows; i++)
+    {
+        U[i][cols - 1] = Z[i];
+    }
+    // UX=Z
+    vector<double> ans(rows);
+    ans = backSubstitution(U, rows, cols);
+
+    return ans;
+}
 
 // Function to perform Cholesky decomposition
 vector<double> SolutionOfLE::cholesky_decomposition(vector<vector<double>> mat, int rows, int cols)
 {
+    if (!isSymmetric(mat, rows, cols))
+    {
+        cerr << "Matrix is not Symmetric!" << endl;
+    }
     vector<vector<double>> L(rows, vector<double>(cols)); // Lower triangular matrix
     for (int i = 0; i < rows; i++)
     {
