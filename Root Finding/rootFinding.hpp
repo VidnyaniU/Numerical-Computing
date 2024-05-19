@@ -9,6 +9,8 @@ public:
     rootFinding(double tol);
     double f(double x);      // function
     double f_dash(double x); // derivative
+    double f_x(double x);    // for fixed point iteration
+
     vector<double> get_interval();
     double Bisection(double a, double b);
     double Bisection();

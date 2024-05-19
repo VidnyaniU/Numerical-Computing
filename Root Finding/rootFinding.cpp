@@ -16,3 +16,9 @@ double rootFinding::f_dash(double x)
 {
     return (2 * x) - 4;
 }
+
+// for fixed point
+double rootFinding ::f_x(double x)
+{
+    return (x * x + 2) / 4;
+}
