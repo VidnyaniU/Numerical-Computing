@@ -12,6 +12,6 @@ public:
     vector<double> get_interval();
     double Bisection(double a, double b);
     double Bisection();
-    double Newton_Raphson(double xn, double epsilon);
+    double Newton_Raphson();
     double Fixed_Point();
 };

@@ -8,5 +8,8 @@ int main()
     // cout << a << b << endl;
     double root = f1.Bisection();
     cout << "Root using Bisection method :: " << root << endl;
+
+    root = f1.Newton_Raphson();
+    cout << "Root using Newton-Raphson method :: " << root << endl;
     return 0;
 }

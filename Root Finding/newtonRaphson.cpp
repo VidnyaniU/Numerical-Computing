@@ -1,34 +1,16 @@
-#include <bits/stdc++.h>
-#include <cmath>
+#include "rootFinding.hpp"
 using namespace std;
 
-// double func(double x)
-// {
-//     return (2 * (x * x) - 1);
-// }
-
-// double fDerivative(double x)
-// {
-//     return (4 * x);
-// }
-
-// double Newton_Raphson(double xn, double epsilon)
-// {
-//     double xn1 = 0;
-//     int counter = 0;
-//     xn1 = xn - func(xn) / fDerivative(xn);
-//     while (xn1 >= epsilon)
-//     {
-//         xn = xn1;
-//         xn1 = xn - func(xn) / fDerivative(xn);
-//         counter++;
-//     }
-//     cout << "counter::" << counter << endl;
-//     return xn;
-// }
-// int main()
-// {
-//     double root = newtonRaphson(1.0, 0.7071);
-//     cout << "Root is :: " << root << endl;
-//     return 0;
-// }
+double rootFinding::Newton_Raphson()
+{
+    double prev;
+    int iter = 0;
+    do
+    {
+        prev = x0;
+        x0 = x0 - (f(x0) / f_dash(x0));
+        iter++;
+    } while (fabs(x0 - prev) > tol);
+    // cout << "Iterations ::" << iter << endl;
+    return x0;
+}
