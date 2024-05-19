@@ -1,31 +1,12 @@
-#include <iostream>
-#include "function.hpp"
+#include "rootFinding.hpp"
 using namespace std;
 int main()
 {
-    Function f1;
-    int degree;
-    cout << "Enter degree: ";
-    cin >> degree;
-    cout << endl;
+    rootFinding f1(0.001); // object of the function
+    // double a = 0.0, b = 1.0;
 
-    int *coefficients = new int[degree + 1];
-    // int len = *(&coefficients + 1) - coefficients;
-    // cout << "Length = " << len;
-    for (int i = 0; i < degree + 1; i++)
-    {
-        cout << "Enter coefficient of x ^ " << i << ":";
-        cin >> coefficients[i];
-        cout << endl;
-    }
-
-    double x;
-    cout << "Enter the value of x: ";
-    cin >> x;
-    cout << endl;
-    double res = f1.func(degree, coefficients, x);
-    f1.printFunction(degree, coefficients);
-    cout << endl;
-    cout << "For x = " << x << " :: Result = " << res << endl;
+    // cout << a << b << endl;
+    double root = f1.Bisection();
+    cout << "Root using Bisection method :: " << root << endl;
     return 0;
 }

@@ -1,58 +1,74 @@
-#include <iostream>
+#include "rootFinding.hpp"
 #include <math.h>
 using namespace std;
 
-// Function f1;
-double func(double x)
+vector<double> rootFinding::get_interval()
 {
-    return 2 * x * x - 1;
-    // return 4 * x * x * x - 3 * x;
+    vector<double> interval(2);
+    double x = 0, y = 1;
+    while (x > -10 && y < 10)
+    {
+        if (f(x) * f(y) < 0)
+        {
+            interval[0] = x;
+            interval[1] = y;
+            return interval;
+        }
+        else
+        {
+            x--;
+            y++;
+        }
+    }
+    exit(1);
 }
-double tolerence;
-double c;
-double bisection(double a, double b, double tolerence)
+
+double rootFinding::Bisection(double a, double b)
 {
-    if (func(a) * func(b) >= 0) // if a and b have same signs
+    int iter = 0;
+    double m, prev_m = 0.0;
+    // double m = 0.0;
+
+    if (f(a) * f(b) >= 0) // if a and b have same signs
     {
         cout << "Incorrect a and b." << endl;
         return 0;
     }
-    c = a;
-    while (b - a >= tolerence)
+
+    do
     {
-        c = (a + b) / 2;
-        if (func(c) == 0)
+        // cout << "prev_m::" << prev_m << " m :: " << m << endl;
+
+        prev_m = m;
+        // cout << "prev_m::" << prev_m << endl;
+        iter++;
+        m = (a + b) / 2;
+        if (f(m) == 0)
         {
-            // cout << "Root : " << c << endl;
+            // cout << "Iteration " << iter << " : " << m << endl;
             break;
         }
-        else if (func(c) * func(a) < 0) // if f(a) * f(c) < 0, the root lies in [a, c], so update b = c
+        if (f(m) * f(a) < 0) // if f(a) * f(m) < 0, the root lies in [a, m], so update b = m
         {
-            // cout << "Root : " << c << endl;
-            b = c;
+            // cout << "Iteration " << iter << " : " << m << endl;
+            b = m;
         }
         else // if f(b) * f(c) < 0, the root lies in [c, b], so update a = c
         {
-            // cout << "Root : " << c << endl;
-            a = c;
+            // cout << "Iteration " << iter << " : " << m << endl;
+            a = m;
         }
-    }
 
-    return c;
+    } while (fabs(m - prev_m) > tol);
+
+    return m;
 }
 
-int main()
+double rootFinding ::Bisection()
 {
-    double a, b;
-    cout << "Enter the values of a and b ";
-    cin >> a >> b;
-    cout << endl
-         << "Enter tolerence: ";
-    cin >> tolerence;
-
-    cout << "a = " << a << " :: f(a) = " << func(a) << endl;
-    cout << "b = " << b << " :: f(b) = " << func(b) << endl;
-
-    cout << bisection(a, b, tolerence);
-    return 0;
+    vector<double> interval(2);
+    interval = get_interval();
+    a = interval[0];
+    b = interval[1];
+    return Bisection(a, b);
 }
