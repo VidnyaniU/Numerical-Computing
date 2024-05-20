@@ -24,7 +24,7 @@ public:
 
     bool isDiagonallyDominant();
     bool makeDiagonallyDominant();
-    bool isSymmetric(vector<vector<double>> mat, int rows, int cols);
+    bool isSymmetric();
 
     int getDiagonallyDominantRowAt(int r);
     void swapRows(int row1, int row2);
@@ -39,6 +39,6 @@ public:
     vector<double> gaussian_elimination();
     vector<double> gauss_jacobi();
     vector<double> gauss_seidel();
-    vector<double> lu_decomposition(vector<vector<double>> mat, int rows, int cols);
-    vector<double> cholesky_decomposition(vector<vector<double>> mat, int rows, int cols);
+    vector<double> lu_decomposition();
+    vector<double> cholesky_decomposition();
 };

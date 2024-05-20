@@ -148,6 +148,25 @@ bool Matrix::makeDiagonallyDominant()
     return true;
 }
 
+bool Matrix::isSymmetric()
+{
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols - 1; j++)
+        {
+            if (i > j)
+            {
+                if (mat[i][j] != mat[j][i])
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
 vector<vector<double>> Matrix::rowReduction()
 {
     int i, j;

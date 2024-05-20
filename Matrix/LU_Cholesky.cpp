@@ -1,4 +1,4 @@
-#include "SolutionOfLinearEq.hpp"
+#include "Matrix.hpp"
 using namespace std;
 
 double get_U(int r, int c, vector<vector<double>> mat, vector<vector<double>> L, vector<vector<double>> U)
@@ -35,7 +35,7 @@ double get_Lij(int i, int j, vector<vector<double>> mat, vector<vector<double>> 
     return L[i][j];
 }
 
-double get_Ljj(int j, vector<vector<double>> &mat, vector<vector<double>> &L)
+double get_Ljj(int j, vector<vector<double>> mat, vector<vector<double>> &L)
 {
     double sum = 0.0;
     for (int k = 0; k < j; k++)
@@ -46,56 +46,7 @@ double get_Ljj(int j, vector<vector<double>> &mat, vector<vector<double>> &L)
     return L[j][j];
 }
 
-bool SolutionOfLE::isSymmetric(vector<vector<double>> mat, int rows, int cols)
-{
-
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols - 1; j++)
-        {
-            if (i > j)
-            {
-                if (mat[i][j] != mat[j][i])
-                {
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
-}
-
-vector<vector<double>> SolutionOfLE::getTranspose(vector<vector<double>> L, int rows, int cols)
-{
-    vector<vector<double>> L_transpose(rows, vector<double>(cols - 1));
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols - 1; j++)
-        {
-            L_transpose[i][j] = L[j][i];
-        }
-    }
-    return L_transpose;
-}
-
-// Function to perform forward substitution
-vector<double> SolutionOfLE::forwardSubstitution(vector<vector<double>> mat, int rows, int cols)
-{
-    vector<double> ans(rows);
-    ans[0] = mat[0][cols - 1] / mat[0][0];
-    for (int r = 1; r < rows; r++)
-    {
-        double sum = 0;
-        for (int c = 0; c < r; c++)
-        {
-            sum += mat[r][c] * ans[c];
-        }
-        ans[r] = (mat[r][cols - 1] - sum) / mat[r][r];
-    }
-    return ans;
-}
-
-vector<double> SolutionOfLE::lu_decomposition(vector<vector<double>> mat, int rows, int cols)
+vector<double> Matrix::lu_decomposition()
 {
     vector<vector<double>> L(rows, vector<double>(cols)); // lower triangular
     vector<vector<double>> U(rows, vector<double>(cols)); // upper triangular
@@ -130,7 +81,7 @@ vector<double> SolutionOfLE::lu_decomposition(vector<vector<double>> mat, int ro
     }
     // LZ=B
     vector<double> Z(rows);
-    Z = forwardSubstitution(L, rows, cols);
+    Z = forwardSubstitution(L);
     // attach Z to U
     for (int i = 0; i < rows; i++)
     {
@@ -138,15 +89,14 @@ vector<double> SolutionOfLE::lu_decomposition(vector<vector<double>> mat, int ro
     }
     // UX=Z
     vector<double> ans(rows);
-    ans = backSubstitution(U, rows, cols);
+    ans = backSubstitution(U);
 
     return ans;
 }
 
-// Function to perform Cholesky decomposition
-vector<double> SolutionOfLE::cholesky_decomposition(vector<vector<double>> mat, int rows, int cols)
+vector<double> Matrix::cholesky_decomposition()
 {
-    if (!isSymmetric(mat, rows, cols))
+    if (!isSymmetric())
     {
         cerr << "Matrix is not Symmetric!" << endl;
     }
@@ -179,7 +129,7 @@ vector<double> SolutionOfLE::cholesky_decomposition(vector<vector<double>> mat, 
         L[i][cols - 1] = mat[i][cols - 1];
     }
 
-    vector<double> Y = forwardSubstitution(L, rows, cols);
+    vector<double> Y = forwardSubstitution(L);
     // attach Y to L_transpose
     for (int i = 0; i < rows; i++)
     {
@@ -206,7 +156,7 @@ vector<double> SolutionOfLE::cholesky_decomposition(vector<vector<double>> mat, 
     //     cout << endl;
     // }
 
-    vector<double> X = backSubstitution(L_transpose, rows, cols);
+    vector<double> X = backSubstitution(L_transpose);
 
     // Printing the solution vector X
     // cout << "Solution Vector X:" << endl;
