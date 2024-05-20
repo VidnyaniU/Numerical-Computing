@@ -28,34 +28,38 @@ int main()
     fin >> rows >> cols;
     // cout << "Row :: " << rows << " Cols :: " << cols << endl;
 
-    Matrix obj(fileName_L, fileName_R);
+    Matrix obj_GE(fileName_L, fileName_R);
+    Matrix obj_GJ(fileName_L, fileName_R);
+    Matrix obj_GS(fileName_L, fileName_R);
 
-    vector<double> ans(rows);
+    vector<double> ans_GE(rows);
+    vector<double> ans_GJ(rows);
+    vector<double> ans_GS(rows);
 
-    ans = obj.gaussian_elimination();
+    ans_GE = obj_GE.gaussian_elimination();
 
     cout << "Solution of the given system by Gaussian Elimination:: " << endl;
     for (int i = 0; i < rows; i++)
     {
-        cout << "X" << i + 1 << " = " << ans[i] << endl;
+        cout << "X" << i + 1 << " = " << ans_GE[i] << endl;
     }
     cout << endl;
 
-    ans = obj.gauss_jacobi();
+    ans_GJ = obj_GJ.gauss_jacobi();
 
     cout << "Solution of the given system by Gauss-Jacobi :: " << endl;
     for (int i = 0; i < rows; i++)
     {
-        cout << "X" << i + 1 << " = " << ans[i] << endl;
+        cout << "X" << i + 1 << " = " << ans_GJ[i] << endl;
     }
     cout << endl;
 
-    ans = obj.gauss_seidel();
+    ans_GS = obj_GS.gauss_seidel();
 
     cout << "Solution of the given system by Gauss-Seidel :: " << endl;
     for (int i = 0; i < rows; i++)
     {
-        cout << "X" << i + 1 << " = " << ans[i] << endl;
+        cout << "X" << i + 1 << " = " << ans_GS[i] << endl;
     }
     cout << endl;
 

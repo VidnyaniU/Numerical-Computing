@@ -8,7 +8,14 @@ vector<double> Matrix::gauss_jacobi()
 
     if (!isDiagonallyDominant())
     {
+
         makeDiagonallyDominant();
+        // even after making diagonally of its not diagonally dominant use gaussian-elimination
+
+        if (!isDiagonallyDominant())
+        {
+            return gaussian_elimination();
+        }
     }
 
     int max_iterations = 1000;  // Maximum number of iterations
@@ -54,6 +61,12 @@ vector<double> Matrix::gauss_seidel()
     if (!isDiagonallyDominant())
     {
         makeDiagonallyDominant();
+
+        // even after making diagonally of its not diagonally dominant use gaussian-elimination
+        if (!isDiagonallyDominant())
+        {
+            return gaussian_elimination();
+        }
     }
 
     int maxIterations = 1000; // Maximum number of iterations to avoid infinite loop
