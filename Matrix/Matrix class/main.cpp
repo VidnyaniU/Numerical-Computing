@@ -3,7 +3,7 @@ using namespace std;
 
 int main()
 {
-    string L_3 = "L_3.txt"; // especially for gauss-jacobi
+    string L_3 = "L_3.txt"; 
     string R_3 = "R_3.txt";
 
     string L_4 = "matrixL_4.txt";
@@ -33,8 +33,8 @@ int main()
     Matrix obj_GS(fileName_L, fileName_R);
     Matrix obj_LU(fileName_L, fileName_R);
 
-    string L_3_S = "../matrices_txt/L_3_Symmetric.txt";
-    string R_3_S = "../matrices_txt/R_3_Symmetric.txt";
+    string L_3_S = "./matrices_txt/L_3_Symmetric.txt";
+    string R_3_S = "./matrices_txt/R_3_Symmetric.txt";
 
     fileName_L = L_3_S;
     fileName_R = R_3_S;
