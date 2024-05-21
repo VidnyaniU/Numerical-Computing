@@ -27,6 +27,8 @@ Matrix::Matrix(vector<vector<double>> matrix, int row, int col)
 
 Matrix ::Matrix(string file_L, string file_R)
 {
+    // string const HOME = getenv("HOME") ? getenv("HOME") : ".";
+
     ifstream fin;
     fin.open(file_L);
 

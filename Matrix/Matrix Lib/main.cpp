@@ -1,3 +1,4 @@
+// #include <cstdlib>
 #include "Matrix.hpp"
 using namespace std;
 
@@ -33,13 +34,17 @@ int main()
     Matrix obj_GS(fileName_L, fileName_R);
     Matrix obj_LU(fileName_L, fileName_R);
 
-    string L_3_S = "L_3_Symmetric.txt";
-    string R_3_S = "R_3_Symmetric.txt";
+    string const HOME = getenv("HOME") ? getenv("HOME") : ".";
+
+    // std::ifstream myfile(HOME + "/path/in/home/folder.txt");
+    string L_3_S = "/Documents/GitHub/Numerical-Computing/Matrix/matrices_txt/L_3_Symmetric.txt";
+    string R_3_S = "/Documents/GitHub/Numerical-Computing/Matrix/matrices_txt/R_3_Symmetric.txt";
 
     fileName_L = L_3_S;
     fileName_R = R_3_S;
-    Matrix obj_CH(fileName_L, fileName_R);
 
+    Matrix obj_CH(HOME + fileName_L, HOME + fileName_R);
+    // cout << "L :: " << HOME + fileName_L << "R :: " << HOME + fileName_R << endl;
     vector<double> ans_GE(rows);
     vector<double> ans_GJ(rows);
     vector<double> ans_GS(rows);
@@ -82,6 +87,7 @@ int main()
     // }
     // cout << endl;
 
+    rows = 3, cols = 4;
     ans_CH = obj_CH.cholesky_decomposition();
     cout << "Solution of the given system by Cholesky Decomposition :: " << endl;
     for (int i = 0; i < rows; i++)
