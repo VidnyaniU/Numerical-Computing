@@ -4,6 +4,7 @@ using namespace std;
 
 int main()
 {
+    /*
     string L_3 = "L_3.txt";
     string R_3 = "R_3.txt";
 
@@ -99,5 +100,28 @@ int main()
     //     cout << "X" << i + 1 << " = " << ans_CH[i] << endl;
     // }
     // cout << endl;
+
+    */
+    string const HOME = getenv("HOME") ? getenv("HOME") : ".";
+
+    string file_L = "/Documents/GitHub/Numerical-Computing/Matrix/matrices_txt/L_Practical.txt";
+    string file_R = "/Documents/GitHub/Numerical-Computing/Matrix/matrices_txt/R_Practical.txt";
+    Matrix obj_GJ(HOME + file_L, HOME + file_R);
+    int rows, cols;
+    rows = obj_GJ.get_rows();
+    cols = obj_GJ.get_cols();
+    cout << "Rows :: " << rows << " Cols :: " << cols << endl;
+    cout << "Given Matrix :: " << endl;
+    obj_GJ.printMatrix();
+    vector<double> ans_GJ(rows);
+    ans_GJ = obj_GJ.gauss_jacobi();
+
+    cout << "Solution of the given system by Gauss-Jacobi :: " << endl;
+    for (int i = 0; i < rows; i++)
+    {
+        cout << "X" << i + 1 << " = " << ans_GJ[i] << endl;
+    }
+    cout << endl;
+
     return 0;
 }
