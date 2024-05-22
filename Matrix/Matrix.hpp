@@ -11,16 +11,15 @@ public:
     Matrix(vector<vector<double>> matrix, int row, int col);
     Matrix(string file_L, string file_R); // reading matrix from file
 
+    vector<vector<double>> &get_mat_data();
+    int get_rows() const;
+    int get_cols() const;
     // simple matrix operations
     void printMatrix();
 
-    //-----------TO DO ---------
-
-    //add get_rows , get_cols 
-    void addition(Matrix, Matrix);
-    void subtraction(Matrix, Matrix);
-    void multiplication(Matrix, Matrix);
-    //--------------------------
+    vector <vector<double>> addition(Matrix &mat1, Matrix &mat2);
+    vector <vector<double>> subtraction(Matrix &mat1, Matrix &mat2);
+    vector <vector<double>> multiplication(Matrix &mat1, Matrix &mat2);
 
     bool isDiagonallyDominant();
     bool makeDiagonallyDominant();

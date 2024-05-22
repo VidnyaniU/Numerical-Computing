@@ -22,12 +22,7 @@ int main()
     string fileName_L = L_3;
     string fileName_R = R_3;
 
-    ifstream fin;
-    fin.open(fileName_L);
-
-    int rows, cols;
-    fin >> rows >> cols;
-    // cout << "Row :: " << rows << " Cols :: " << cols << endl;
+    // ifstream fin;
 
     Matrix obj_GE(fileName_L, fileName_R);
     Matrix obj_GJ(fileName_L, fileName_R);
@@ -42,13 +37,22 @@ int main()
 
     fileName_L = L_3_S;
     fileName_R = R_3_S;
-
     Matrix obj_CH(HOME + fileName_L, HOME + fileName_R);
     // cout << "L :: " << HOME + fileName_L << "R :: " << HOME + fileName_R << endl;
-    vector<double> ans_GE(rows);
-    vector<double> ans_GJ(rows);
-    vector<double> ans_GS(rows);
-    vector<double> ans_LU(rows);
+
+    // fin.open(HOME + fileName_L);
+    int rows, cols;
+    rows = obj_CH.get_rows();
+    cols = obj_CH.get_cols();
+
+    // cout << "Row :: " << rows << " Cols :: " << rows + 1 << endl;
+    // rows = obj_CH.get_rows(fileName_L);
+    // cols = obj_CH.get_cols();
+
+    // vector<double> ans_GE(rows);
+    // vector<double> ans_GJ(rows);
+    // vector<double> ans_GS(rows);
+    // vector<double> ans_LU(rows);
     vector<double> ans_CH(rows);
 
     // ans_GE = obj_GE.gaussian_elimination();
@@ -87,13 +91,13 @@ int main()
     // }
     // cout << endl;
 
-    rows = 3, cols = 4;
-    ans_CH = obj_CH.cholesky_decomposition();
-    cout << "Solution of the given system by Cholesky Decomposition :: " << endl;
-    for (int i = 0; i < rows; i++)
-    {
-        cout << "X" << i + 1 << " = " << ans_CH[i] << endl;
-    }
-    cout << endl;
+    // rows = 3, cols = 4;
+    // ans_CH = obj_CH.cholesky_decomposition();
+    // cout << "Solution of the given system by Cholesky Decomposition :: " << endl;
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     cout << "X" << i + 1 << " = " << ans_CH[i] << endl;
+    // }
+    // cout << endl;
     return 0;
 }

@@ -70,6 +70,90 @@ Matrix ::Matrix(string file_L, string file_R)
     // }
 }
 
+vector<vector<double>> &Matrix::get_mat_data()
+{
+    return mat;
+}
+int Matrix::get_rows() const
+{
+    return rows;
+}
+int Matrix::get_cols() const
+{
+    return cols;
+}
+vector<vector<double>> Matrix::addition(Matrix &mat1, Matrix &mat2)
+{
+    if (mat1.get_rows() != mat2.get_rows() || mat1.get_cols() != mat2.get_cols())
+    {
+        throw invalid_argument("Matrices dimensions do not match");
+    }
+
+    int rows = mat1.get_rows();
+    int cols = mat1.get_cols();
+    mat.resize(rows, vector<double>(cols));
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            mat[i][j] = mat1.get_mat_data()[i][j] + mat2.get_mat_data()[i][j];
+        }
+    }
+
+    return mat;
+}
+
+vector<vector<double>> Matrix::subtraction(Matrix &mat1, Matrix &mat2)
+{
+    if (mat1.get_rows() != mat2.get_rows() || mat1.get_cols() != mat2.get_cols())
+    {
+        throw invalid_argument("Matrices dimensions do not match");
+    }
+
+    int rows = mat1.get_rows();
+    int cols = mat1.get_cols();
+    mat.resize(rows, vector<double>(cols));
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            mat[i][j] = mat1.get_mat_data()[i][j] - mat2.get_mat_data()[i][j];
+        }
+    }
+
+    return mat;
+}
+
+vector<vector<double>> Matrix::multiplication(Matrix &mat1, Matrix &mat2)
+{
+
+    if (mat1.get_cols() != mat2.get_rows())
+    {
+        throw invalid_argument("Matrices dimensions do not match");
+    }
+
+    int rows1 = mat1.get_rows();
+    int cols1 = mat1.get_cols();
+    int cols2 = mat2.get_cols();
+
+    vector<vector<double>> mat(rows1, vector<double> (cols2)) ;
+
+    for (int i = 0; i < rows1; ++i)
+    {
+        for (int j = 0; j < cols2; ++j)
+        {
+            mat[i][j] = 0;
+            for (int k = 0; k < cols1; ++k)
+            {
+                mat[i][j] += mat1.get_mat_data()[i][k] * mat2.get_mat_data()[k][j];
+            }
+        }
+    }
+
+    return mat;
+}
 bool Matrix::isDiagonallyDominant()
 {
     for (int r = 0; r < rows; r++)
