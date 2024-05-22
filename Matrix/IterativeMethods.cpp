@@ -1,6 +1,16 @@
 #include "Matrix.hpp"
 using namespace std;
 
+double norm(vector<double> vec)
+{
+    double temp = 0.0;
+    for (int i = 0; i < vec.size(); i++)
+    {
+        temp += vec[i] * vec[i];
+    }
+
+    return sqrt(temp);
+}
 vector<double> Matrix::gauss_jacobi()
 {
     vector<double> prev_ans(rows, 0); // initial solution
@@ -18,17 +28,18 @@ vector<double> Matrix::gauss_jacobi()
         }
     }
 
-    int max_iterations = 1000;  // Maximum number of iterations
-    double tolerance = 0.00001; // Tolerance for convergence
+    // int max_iterations = 1000;  // Maximum number of iterations
+    double tolerence = 0.00001; // Tolerance for convergence
 
-    for (int iter = 0; iter < max_iterations; ++iter)
+    // for (int iter = 0; iter < max_iterations; ++iter)
+    while (1)
     {
         for (int r = 0; r < rows; r++)
         {
             double sum = 0.0;
             for (int c = 0; c < rows; c++)
             {
-                if (c != r)
+                if (c != r && mat[r][c] != 0)
                 {
                     sum += mat[r][c] * prev_ans[c];
                 }
@@ -36,17 +47,22 @@ vector<double> Matrix::gauss_jacobi()
             curr_ans[r] = (mat[r][cols - 1] - sum) / mat[r][r];
         }
 
-        // Check for convergence
-        double max_diff = 0.0;
-        for (int i = 0; i < rows; i++)
-        {
-            max_diff = max(max_diff, fabs(curr_ans[i] - prev_ans[i]));
-        }
-        if (max_diff < tolerance)
-        {
-            // cout << "Number of iterations using GJ :: " << iter << endl;
-            return curr_ans; // Converged
-        }
+        /*
+                // Check for convergence
+                double max_diff = 0.0;
+                for (int i = 0; i < rows; i++)
+                {
+                    max_diff = max(max_diff, fabs(curr_ans[i] - prev_ans[i]));
+                }
+                if (max_diff < tolerance)
+                {
+                    // cout << "Number of iterations using GJ :: " << iter << endl;
+                    return curr_ans; // Converged
+                }
+        */
+        // iteration stopping criteria using norm
+        if (fabs(norm(prev_ans) - norm(curr_ans)) < tolerence)
+            return curr_ans;
 
         prev_ans = curr_ans; // Update previous solution
     }
