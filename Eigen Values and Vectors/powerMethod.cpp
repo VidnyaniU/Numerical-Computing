@@ -47,6 +47,7 @@ double power_method(vector<vector<double>> A, vector<double> X)
         }
         // compute the approximate eigen value
         vector<double> Ay = matrix_vector_multiplication(A, X);
+
         double eigen_val = 0.0;
         for (int i = 0; i < n; i++)
         {
@@ -57,6 +58,12 @@ double power_method(vector<vector<double>> A, vector<double> X)
 
         if (abs(eigen_val - old_eigen_val) <= tolerence)
         {
+            cout << "Ay vector :: " << endl;
+            for (int i = 0; i < n; i++)
+            {
+                cout << Ay[i] << " ";
+            }
+            cout << endl;
             return eigen_val;
         }
         old_eigen_val = eigen_val;
